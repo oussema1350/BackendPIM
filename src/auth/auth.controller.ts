@@ -23,7 +23,7 @@ import { UpdateProfileDto } from './dtos/update-profil.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
-import path = require('path');
+import * as path from 'path';
 import { AuthenticatedRequest } from './authenticated-request';
 
 @ApiTags('Authentication') // Groupe cette API sous "Authentication"

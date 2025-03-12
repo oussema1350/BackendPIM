@@ -51,6 +51,11 @@ export class AuthService {
       throw new BadRequestException('Email already in use');
     }
 
+    // Ensure password is provided
+    if (!password) {
+      throw new BadRequestException('Password is required');
+    }
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 

@@ -1,0 +1,102 @@
+2025-02-15 21:56:00,170 - app - INFO - Embeddings, FAISS indices, and models loaded successfully.
+2025-02-15 21:56:15,875 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-15 22:23:27,930 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-15 22:23:33,638 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-15 22:26:59,631 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-15 22:26:59,631 - app - INFO - Number of trusted facts: 11684
+2025-02-15 22:26:59,632 - app - INFO - FAISS index size: 11684
+2025-02-15 22:27:03,173 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-15 22:27:03,173 - app - ERROR - Error processing statement 'Antibacterial soap is more effective than regular soap in preventing illness.': Object of type float32 is not JSON serializable
+Traceback (most recent call last):
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/app.py", line 55, in analyze
+    return jsonify(result)
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/venv/lib/python3.13/site-packages/flask/json/__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/venv/lib/python3.13/site-packages/flask/json/provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/venv/lib/python3.13/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/venv/lib/python3.13/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type float32 is not JSON serializable
+2025-02-15 22:28:16,477 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-15 22:28:16,477 - app - INFO - Number of trusted facts: 11684
+2025-02-15 22:28:16,477 - app - INFO - FAISS index size: 11684
+2025-02-15 22:28:28,631 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-16 01:11:02,094 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:11:02,094 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:11:02,094 - app - INFO - FAISS index size: 11684
+2025-02-16 01:11:45,658 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-16 01:15:59,267 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:15:59,268 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:15:59,268 - app - INFO - FAISS index size: 11684
+2025-02-16 01:16:11,710 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-16 01:18:16,091 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:18:16,091 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:18:16,092 - app - INFO - FAISS index size: 11684
+2025-02-16 01:18:20,854 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-16 01:22:48,556 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:22:48,557 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:22:48,557 - app - INFO - FAISS index size: 11684
+2025-02-16 01:22:52,754 - app - ERROR - Error processing statement 'Antibacterial soap is more effective than regular soap in preventing illness.': invalid index to scalar variable.
+Traceback (most recent call last):
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/app.py", line 41, in analyze
+    result = check_fact(statement, trusted_facts, faiss_index, model, embeddings)
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/scifact_checker.py", line 62, in check_fact
+    contradiction_score = np.dot(statement_embedding, negation_embedding.T)[0][0]
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: invalid index to scalar variable.
+2025-02-16 01:24:19,365 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:24:19,365 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:24:19,365 - app - INFO - FAISS index size: 11684
+2025-02-16 01:24:22,412 - app - ERROR - Error processing statement 'Antibacterial soap is more effective than regular soap in preventing illness.': check_fact() missing 1 required positional argument: 'embeddings'
+Traceback (most recent call last):
+  File "/Users/oussemahajjem/development/medi-trust_backend/src/detection/app.py", line 40, in analyze
+    result = check_fact(statement, trusted_facts, faiss_index, model)
+TypeError: check_fact() missing 1 required positional argument: 'embeddings'
+2025-02-16 01:25:14,805 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:25:14,805 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:25:14,806 - app - INFO - FAISS index size: 11684
+2025-02-16 01:25:18,212 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness.
+2025-02-16 01:33:35,458 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:33:35,458 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:33:35,458 - app - INFO - FAISS index size: 11684
+2025-02-16 01:33:41,101 - app - INFO - Successfully processed statement: Insulin is a hormone produced by the pancreas that helps regulate blood sugar levels in the body.
+2025-02-16 01:38:33,484 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:38:33,484 - app - INFO - Number of trusted facts: 11684
+2025-02-16 01:38:33,484 - app - INFO - FAISS index size: 11684
+2025-02-16 01:38:36,899 - app - INFO - Successfully processed statement: Eating sugar causes diabetes directly.
+2025-02-16 01:39:12,487 - app - INFO - Successfully processed statement: Vaccines cause autism.
+2025-02-16 01:40:01,355 - app - INFO - Successfully processed statement: The Great Wall of China is visible from space with the naked eye..
+2025-02-16 01:41:25,766 - app - INFO - Successfully processed statement: Antibacterial soap is more effective than regular soap in preventing illness..
+2025-02-16 01:41:56,186 - app - INFO - Successfully processed statement: A person's blood type can influence their susceptibility to COVID-19..
+2025-02-16 01:42:36,885 - app - INFO - Successfully processed statement: You can catch a cold by being exposed to cold weather..
+2025-02-16 01:55:17,802 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 01:55:17,803 - app - INFO - Number of trusted facts: 2720
+2025-02-16 01:55:17,803 - app - INFO - FAISS index size: 2720
+2025-02-16 01:55:31,698 - app - INFO - Successfully processed statement: You can catch a cold by being exposed to cold weather..
+2025-02-16 02:00:11,968 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 02:00:11,969 - app - INFO - Number of trusted facts: 1481
+2025-02-16 02:00:11,969 - app - INFO - FAISS index size: 1481
+2025-02-16 02:00:15,320 - app - INFO - Successfully processed statement: You can catch a cold by being exposed to cold weather.
+2025-02-16 02:00:41,153 - app - INFO - Successfully processed statement: A person's blood type can influence their susceptibility to COVID-19..
+2025-02-16 02:02:02,410 - app - INFO - Successfully processed statement: diabetes is an autoimmune disease where the immune system attacks insulin-producing cells in the pancreas..
+2025-02-16 02:02:35,429 - app - INFO - Successfully processed statement: Type 1 diabetes is an autoimmune disease where the immune system attacks insulin-producing cells in the pancreas.
+2025-02-16 02:03:30,055 - app - INFO - Successfully processed statement: Eating too much sugar directly causes diabetes.
+2025-02-16 02:03:42,135 - app - INFO - Successfully processed statement: People with diabetes cannot eat carbohydrates at all
+2025-02-16 02:04:02,549 - app - INFO - Successfully processed statement: Only overweight people develop diabetes. 
+2025-02-16 02:22:43,984 - app - INFO - Embeddings, FAISS index, and model loaded successfully.
+2025-02-16 02:22:43,985 - app - INFO - Number of trusted facts: 1481
+2025-02-16 02:22:43,985 - app - INFO - FAISS index size: 1481
+2025-02-16 02:23:28,603 - app - INFO - Successfully processed statement: Only overweight people develop diabetes. 
+2025-02-16 02:25:00,595 - app - INFO - Successfully processed statement: .Vaccines help the immune system recognize and fight off specific pathogens, preventing diseases.

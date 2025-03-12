@@ -6,12 +6,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesModule } from './roles/roles.module';
-import { DetectionModule } from './detection/detection.module';
+import { AnalyzeModule } from './analyze/analyze.module';
 import config from './config/config';
+import { ChatModule } from './chat/chat.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: '.env', 
       isGlobal: true,
       cache: true,
       load: [config],
@@ -31,9 +35,14 @@ import config from './config/config';
       }),
       inject: [ConfigService],
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // Serve static files from "uploads"
+      serveRoot: '/uploads', // URL path prefix
+    }),
     AuthModule,
     RolesModule,
-    DetectionModule,
+    AnalyzeModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
