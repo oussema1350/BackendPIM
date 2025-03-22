@@ -1,9 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as crypto from 'crypto'; 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  console.log(crypto.randomUUID());
 
   // Configurer Swagger
   const config = new DocumentBuilder()

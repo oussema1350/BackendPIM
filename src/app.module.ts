@@ -11,6 +11,8 @@ import config from './config/config';
 import { ChatModule } from './chat/chat.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { NewsModule } from './news/news.module';
+import { LlamaVisionModule } from './llama-vision/llama-vision.module';
 
 @Module({
   imports: [
@@ -43,6 +45,8 @@ import { join } from 'path';
     RolesModule,
     AnalyzeModule,
     ChatModule,
+    NewsModule,
+    LlamaVisionModule, // Ajouter le nouveau module ici
   ],
   controllers: [AppController],
   providers: [AppService],
