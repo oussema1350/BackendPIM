@@ -2,20 +2,25 @@ import { Schema, Document } from 'mongoose';
 
 export interface Article extends Document {
   title: string;
-  description?: string; // Made optional
+  description?: string;
   url: string;
   publishedAt: Date;
-  author?: string; // Optional in case the API response has null values
-  urlToImage?: string; // Optional in case no image is provided
-  content?: string; // Added content field, optional in case it's missing
+  author?: string;
+  urlToImage?: string;
+  content?: string;
+  likeCount: number;        // New
+  dislikeCount: number;     // New
 }
 
 export const ArticleSchema = new Schema({
   title: { type: String, required: true },
-  description: { type: String, required: false }, // Some articles might not have a description
+  description: { type: String, required: false },
   url: { type: String, required: true },
   publishedAt: { type: Date, required: true },
-  author: { type: String, required: false }, // Some articles might not have an author
-  urlToImage: { type: String, required: false }, // Some articles might not have an image
-  content: { type: String, required: false }, // Added content field, optional
+  author: { type: String, required: false },
+  urlToImage: { type: String, required: false },
+  content: { type: String, required: false },
+
+  likeCount: { type: Number, default: 0 },     // New
+  dislikeCount: { type: Number, default: 0 }   // New
 });

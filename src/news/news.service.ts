@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { Article } from './schemas/new.schemas';
@@ -65,6 +65,8 @@ export class NewsService {
         urlToImage: articleData.urlToImage || 'https://via.placeholder.com/150',
         content: cleanedContent,
         publishedAt: new Date(articleData.publishedAt),
+        likeCount: 0,
+        dislikeCount: 0,
       });
 
       console.log('Attempting to save article:', newArticle.title);
@@ -72,6 +74,49 @@ export class NewsService {
       console.log(`Article saved: ${articleData.title}`);
     } catch (error) {
       console.error('Error saving article:', error);
+    }
+  }
+
+  async likeArticle(articleId: string) {
+    try {
+      console.log('Received articleId:', articleId);
+      const objectId = new Types.ObjectId(articleId);
+
+      const article = await this.articleModel.findByIdAndUpdate(
+        objectId,
+        { $inc: { likeCount: 1 } },
+        { new: true }
+      );
+
+      if (!article) {
+        throw new NotFoundException('Article not found');
+      }
+
+      return article;
+    } catch (error) {
+      console.error('Error liking article:', error);
+      throw new Error('Failed to like article');
+    }
+  }
+
+  async dislikeArticle(articleId: string) {
+    try {
+      const objectId = new Types.ObjectId(articleId);
+
+      const article = await this.articleModel.findByIdAndUpdate(
+        objectId,
+        { $inc: { dislikeCount: 1 } },
+        { new: true }
+      );
+
+      if (!article) {
+        throw new NotFoundException('Article not found');
+      }
+
+      return article;
+    } catch (error) {
+      console.error('Error disliking article:', error);
+      throw new Error('Failed to dislike article');
     }
   }
 }
