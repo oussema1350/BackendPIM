@@ -12,7 +12,7 @@ import { ChatModule } from './chat/chat.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { NewsModule } from './news/news.module';
-import { LlamaVisionModule } from './llama-vision/llama-vision.module';
+import { MedicationModule } from './medication/medication.module';
 
 @Module({
   imports: [
@@ -46,7 +46,7 @@ import { LlamaVisionModule } from './llama-vision/llama-vision.module';
     AnalyzeModule,
     ChatModule,
     NewsModule,
-    LlamaVisionModule, // Ajouter le nouveau module ici
+    MedicationModule, // Ajouter le nouveau module ici
   ],
   controllers: [AppController],
   providers: [AppService],
