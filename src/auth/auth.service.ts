@@ -64,7 +64,8 @@ export class AuthService {
       name,
       email,
       password: hashedPassword,
-      profilePicture: profilePicturePath || null, // Use the provided path or set to null
+      profilePicture: profilePicturePath || null, 
+      bannedUntil: null,
     });
 
     await user.save();
@@ -76,6 +77,7 @@ export class AuthService {
         name: user.name,
         email: user.email,
         profilePicture: user.profilePicture,
+        bannedUntil: user.bannedUntil,
       },
     };
   }
@@ -91,6 +93,7 @@ export class AuthService {
       profilePictureUrl: user.profilePicture
         ? `${process.env.API_URL}/${user.profilePicture}`
         : null,
+      bannedUntil: user.bannedUntil,
     };
   }
 

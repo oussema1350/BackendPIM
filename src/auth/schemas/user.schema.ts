@@ -17,6 +17,12 @@ export class User extends Document {
 
   @Prop({ required: false })
   profilePicture: string;
+
+  @Prop({ default: "" })
+  reportedBy: string;
+
+  @Prop({ default: null })
+  bannedUntil: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

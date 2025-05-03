@@ -11,6 +11,12 @@ export class Message extends Document {
 
     @Prop({ required: true })
     date: Date;
+    
+    @Prop({ default: false }) 
+    isImage: boolean;
+
+    @Prop({ default: true })
+    language: string;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);
