@@ -1,5 +1,3 @@
-# Updated GitHub Actions Workflow for Node.js App Deployment with .env Handling
-
 name: Build and deploy Node.js app to Azure Web App - MediCheckBackend
 
 on:
@@ -12,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +18,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
 
       - name: Create .env file
         run: |
@@ -29,6 +27,9 @@ jobs:
           echo "HUGGING_FACE_TOKEN=${{ secrets.HUGGING_FACE_TOKEN }}" >> .env
           echo "NEWS_API_KEY=${{ secrets.NEWS_API_KEY }}" >> .env
           echo "TOGETHER_API_KEY=${{ secrets.TOGETHER_API_KEY }}" >> .env
+
+      - name: Clean workspace
+        run: git clean -fdx
 
       - name: npm install, build, and test
         run: |
@@ -52,8 +53,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read # This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -71,10 +72,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5D5F9B37E8A040D281C82D02AF68F852 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2D606C423BEB40BAA41A5F1219805DC1 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'MediCheckBackend'
           slot-name: 'Production'
-          package: .
+          package: './release.zip'
