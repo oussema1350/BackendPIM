@@ -10,7 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "concurrently \"npm run start:nest\" \"npm run start:model\"",
     "start:nest": "nest start --force",
-    "start:model": "python /Users/oussemahajjem/development/medi-trust_backend/src/analyze/model_server.py",
+    "start:model": "bash -c 'source venv/bin/activate && python src/analyze/model_server.py'",
     "start:dev": "nest start --watch",
     "start:dev:all": "concurrently \"npm run start:dev\" \"npm run start:model\"",
     "start:debug": "nest start --debug --watch",
