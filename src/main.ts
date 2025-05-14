@@ -4,16 +4,18 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as crypto from 'crypto'; 
 import multer from 'multer';
+import { TtsMiddleware } from './medication/tts.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.use(new TtsMiddleware().use);
 
   // Configure Multer for multipart/form-data
-  app.use(multer({
+  /*app.use(multer({
     limits: { fileSize: 50 * 1024 * 1024 },
     storage: multer.memoryStorage(),
   }).any());
-
+*/
   console.log(crypto.randomUUID());
 
   // Configurer Swagger
