@@ -142,6 +142,7 @@
       "json",
       "ts"
     ],
+    "testPathIgnorePatterns": ["/node_modules/", ".*\\.spec\\.ts$"],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
