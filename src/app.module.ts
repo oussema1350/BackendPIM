@@ -11,6 +11,9 @@ import config from './config/config';
 import { ChatModule } from './chat/chat.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { NewsModule } from './news/news.module';
+import { MedicationModule } from './medication/medication.module';
+import { BookmarkModule } from './bookmarks/bookmarks.module';
 
 @Module({
   imports: [
@@ -43,6 +46,9 @@ import { join } from 'path';
     RolesModule,
     AnalyzeModule,
     ChatModule,
+    NewsModule,
+    MedicationModule,
+    BookmarkModule, // Ajouter le nouveau module ici
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -72,33 +72,6 @@ NON_MEDICAL_CATEGORIES = [
     "real estate", "property", "housing", "mortgage", "rent"
 ]
 
-def is_medical_query(text: str) -> bool:
-    """
-    Determine if the query is medical-related using keyword matching and pattern recognition.
-    """
-    text_lower = text.lower()
-    
-    # Check if any medical keyword is present
-    medical_keyword_present = any(keyword.lower() in text_lower for keyword in MEDICAL_KEYWORDS)
-    
-    # Check if the query clearly belongs to a non-medical category
-    non_medical_category = any(category.lower() in text_lower for category in NON_MEDICAL_CATEGORIES)
-    
-    # Pattern matching for common medical question structures
-    medical_patterns = [
-        r"(what|how|when|why|is|are|can|does|do|could|should|would).+(symptom|treatment|disease|diagnosis|medicine|prescription|therapy)",
-        r"(is|are|can|does|do).+(doctor|treatment|cure|medication|surgery|vaccine).+(necessary|recommended|advised|effective)",
-        r"(what|how).+treat.+(disease|condition|symptom|pain|infection)",
-        r"(what|how).+(cause|caused).+(pain|symptom|disease|infection|condition)",
-        r"(what|how|when|why|is|are).+(health|medical|clinical)",
-        r"(feel|feeling).+(pain|sick|nausea|dizzy|tired|weak|unwell)",
-        r"(doctor|hospital|clinic|treatment|medicine|drug|vaccine|surgery).+(recommend|prescribe|suggest|advise)"
-    ]
-    
-    medical_pattern_match = any(re.search(pattern, text_lower) for pattern in medical_patterns)
-    
-    # If it contains a medical keyword AND either matches a medical pattern OR doesn't explicitly fall into a non-medical category
-    return medical_keyword_present and (medical_pattern_match or not non_medical_category)
 
 # Sample medical resources by category that can be referenced
 MEDICAL_RESOURCES = {
@@ -259,18 +232,18 @@ def generate_cached(prompt):
 @app.post("/generate")
 async def generate_response(request: GenerateRequest):
     if not request.input_text:
-        raise HTTPException(status_code=400, detail="Either 'message' or 'prompt' must be provided")
+        raise HTTPException(status_code=400, detail="Input text must be provided")
     
     try:
-        # Check if the query is medical-related
-        if not is_medical_query(request.input_text):
-            return {
-                "response": "I only answer medical questions. Please ask about health or medicine topics."
-            }
-        
+        # Structure that forces the model to analyze first
         messages = [
-            {"role": "system", "content": "You are a medical assistant who gives DIRECT, CONCISE answers. Always begin with 'Yes' or 'No' when possible,if no correct the information, followed by a brief 1-3 sentence explanation. Avoid disclaimers, caveats, and unnecessary details. Focus only on the most essential medical facts. Only address medical topics. Keep your answers under 100 words total."},
-            {"role": "user", "content": request.input_text},
+            {
+                "role": "system",
+                "content": (
+                    "You are a medical assistant. Only return medical prompt with 'Yes' or 'No' + a brief medical justification.if the topic is not medical return i am sorry"
+                )
+            },
+            {"role": "user", "content": request.input_text}
         ]
 
         prompt = tokenizer.apply_chat_template(
@@ -280,19 +253,18 @@ async def generate_response(request: GenerateRequest):
         )
 
         response = generate_cached(prompt)
+        cleaned_response = re.sub(r'\s+', ' ', response.strip())
         
-        # Format the response to be concise
-        concise_response = format_concise_response(response.strip())
+        # Final validation without keyword checks
+        if not cleaned_response.startswith(('Yes', 'No')):
+            if "i only answer medical" not in cleaned_response.lower():
+                cleaned_response = "I only answer medical questions related to health or medicine."
         
-        # Enhance response with relevant medical resource URLs
-        enhanced_response = append_relevant_resources(request.input_text, concise_response)
-
-        # Force garbage collection after inference
-        torch.cuda.empty_cache() if torch.cuda.is_available() else None
-
-        return {"response": enhanced_response}
+        return {"response": cleaned_response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
 
 if __name__ == "__main__":
     import uvicorn
